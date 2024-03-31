@@ -4,7 +4,7 @@
     {
         public int linhas { get; set; }
         public int colunas { get; set; }
-        private Peca[,] pecas;
+        private Peca?[,] pecas;
         public Tabuleiro(int linhas, int colunas)
         {
             this.linhas = linhas;
@@ -12,12 +12,12 @@
             pecas = new Peca[linhas, colunas];
         }
 
-        public Peca peca(int linha, int coluna)
+        public Peca? peca(int linha, int coluna)
         {
             return pecas[linha, coluna];
         }
 
-        public Peca peca(Posicao pos)
+        public Peca? peca(Posicao pos)
         {
             return pecas[pos.Linha, pos.Coluna];
         }
@@ -35,7 +35,29 @@
                 throw new TabuleiroException("Já existe uma peça nesta posição!");
             }
             pecas[pos.Linha, pos.Coluna] = p;
+
+
             p.posicao = pos;
+        }
+
+        public Peca? retirarPeca(Posicao pos)
+        {
+            if (peca(pos) == null)
+            {
+                return null;
+            }
+
+            Peca? aux = peca(pos);
+
+
+            if (aux != null)
+            {
+                aux.posicao = null;
+            }
+
+            pecas[pos.Linha, pos.Coluna] = null;
+
+            return aux;
         }
 
         public bool posicaoValida(Posicao pos)

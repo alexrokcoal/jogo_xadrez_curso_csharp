@@ -9,22 +9,36 @@ namespace xadrez_console
         {
             try
             {
+                // Define o tipo de codificação de texto do console para UTF-8
+                Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+                // Escreve o título do jogo de xadrez
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("\n     Xadrez do Alex!\n");
 
-                PosicaoXadrez pos = new PosicaoXadrez('a', 1);
+                // Inicia a partida de xadrez
+                PartidaXadrez partida = new PartidaXadrez();
 
-                //Console.WriteLine(pos.toPosicao());
+                // Repete enquando a partida não terminar
+                while (!partida.terminada)
+                {
+                    // Limpa a tela
+                    Console.Clear();
 
-                Tabuleiro tab = new Tabuleiro(8, 8);
+                    // Desenha na tela
+                    Tela.imprimirTabuleiro(partida.tab);
 
-                tab.colocarPeca(new Torre(tab, Cor.Preta), new Posicao(0, 0));
-                tab.colocarPeca(new Torre(tab, Cor.Preta), new Posicao(1, 3));
-                tab.colocarPeca(new Rei(tab, Cor.Preta), new Posicao(0, 2));
+                    // Solicita a origem
+                    Console.Write("Informe a origem: ");
+                    Posicao origem = Tela.lerPosicaoXadrez().toPosicao();
 
-                tab.colocarPeca(new Torre(tab, Cor.Branca), new Posicao(3, 5));
+                    // Solicita o destino
+                    Console.Write("Informe o destino: ");
+                    Posicao destino = Tela.lerPosicaoXadrez().toPosicao();
 
-                Tela.imprimirTabuleiro(tab);
+                    // Executa o movimento
+                    partida.executarMovimento(origem, destino);
+                }
             }
             catch (TabuleiroException e)
             {

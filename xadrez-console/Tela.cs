@@ -1,4 +1,5 @@
 ﻿using tabuleiro;
+using xadrez;
 
 
 namespace xadrez_console
@@ -8,6 +9,8 @@ namespace xadrez_console
         public static void imprimirTabuleiro(Tabuleiro tab)
         {
             bool darkBackground = false;
+
+            Console.CursorSize = 100;
 
             for (int i = 0; i < tab.linhas; i++)
             {
@@ -35,10 +38,11 @@ namespace xadrez_console
 
                     if (tab.peca(i, j) == null)
                     {
-                        Console.Write("- ");
+                        Console.Write("  ");
                     }
                     else
                     {
+
                         imprimirPeca(tab.peca(i, j));
                         Console.Write(" ");
                     }
@@ -49,24 +53,34 @@ namespace xadrez_console
 
             Console.BackgroundColor = ConsoleColor.Black;
 
-            Console.WriteLine("     a b c d e f g h\n\n");
+            Console.WriteLine("     a b c d e f g h\n");
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
         }
 
+        public static PosicaoXadrez lerPosicaoXadrez()
+        {
+            string s = Console.ReadLine()!;
+            char coluna = s[0];
+            int linha = int.Parse(s[1] + "");
+            return new PosicaoXadrez(coluna, linha);
+        }
+
         public static void imprimirPeca(Peca peca)
         {
+            ConsoleColor aux = Console.ForegroundColor;
+
             if (peca.cor == Cor.Branca)
             {
-                Console.Write(peca);
+                Console.ForegroundColor = ConsoleColor.White;
             }
             else
             {
-                ConsoleColor aux = Console.ForegroundColor;
                 Console.ForegroundColor = ConsoleColor.Black;
-                Console.Write(peca);
-                Console.ForegroundColor = aux;
             }
+
+            Console.Write(peca);
+            Console.ForegroundColor = aux;
 
         }
     }
