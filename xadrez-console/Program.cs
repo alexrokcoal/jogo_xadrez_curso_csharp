@@ -12,40 +12,49 @@ namespace xadrez_console
                 // Define o tipo de codificação de texto do console para UTF-8
                 Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-                // Escreve o título do jogo de xadrez
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("\n     Xadrez do Alex!\n");
-
                 // Inicia a partida de xadrez
                 PartidaXadrez partida = new PartidaXadrez();
 
                 // Repete enquando a partida não terminar
                 while (!partida.terminada)
                 {
-                    // Limpa a tela
-                    Console.Clear();
+                    try
+                    {
+                        // Desenha na tela
+                        Console.Clear();
+                        Tela.imprimeTitulo();
+                        Tela.imprimirTabuleiro(partida.tab, null);
 
-                    // Desenha na tela
-                    Tela.imprimirTabuleiro(partida.tab, null);
+                        // Apresenta informações na tela
+                        Console.WriteLine("Turno: " + partida.turno);
+                        Console.WriteLine("Aguardando jogada: " + partida.jogadorAtual);
 
-                    // Solicita a origem
-                    Console.Write("Informe a origem: ");
-                    Posicao origem = Tela.lerPosicaoXadrez().toPosicao();
+                        // Solicita e valida a origem
+                        Console.Write("\nInforme a origem: ");
+                        Posicao origem = Tela.lerPosicaoXadrez().toPosicao();
+                        partida.validarPosicaoOrigem(origem);
 
-                    bool[,] posicoesPossiveis = partida.tab.peca(origem).movimentosPossiveis();
+                        // Obtém as os movimentos possíveis
+                        bool[,] movimentosPossiveis = partida.tab.peca(origem).movimentosPossiveis();
 
-                    // Limpa a tela
-                    Console.Clear();
+                        // Desenha na tela
+                        Console.Clear();
+                        Tela.imprimeTitulo();
+                        Tela.imprimirTabuleiro(partida.tab, movimentosPossiveis);
 
-                    // Desenha na tela
-                    Tela.imprimirTabuleiro(partida.tab, posicoesPossiveis);
+                        // Solicita e valida o destino
+                        Console.Write("Informe o destino: ");
+                        Posicao destino = Tela.lerPosicaoXadrez().toPosicao();
+                        partida.validarPosicaoDestino(origem, destino);
 
-                    // Solicita o destino
-                    Console.Write("Informe o destino: ");
-                    Posicao destino = Tela.lerPosicaoXadrez().toPosicao();
-
-                    // Executa o movimento
-                    partida.executarMovimento(origem, destino);
+                        // Executa o movimento
+                        partida.realizaJogada(origem, destino);
+                    }
+                    catch (TabuleiroException e)
+                    {
+                        Console.WriteLine(e.Message);
+                        Console.ReadLine();
+                    }
                 }
             }
             catch (TabuleiroException e)

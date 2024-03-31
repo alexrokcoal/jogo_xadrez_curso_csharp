@@ -6,6 +6,12 @@ namespace xadrez_console
 {
     class Tela
     {
+        public static void imprimeTitulo()
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("\n     Xadrez do Alex!\n");
+        }
+
         public static void imprimirTabuleiro(Tabuleiro tab, bool[,]? posicoesPossiveis)
         {
             bool darkBackground = false;
