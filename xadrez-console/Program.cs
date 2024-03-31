@@ -26,11 +26,19 @@ namespace xadrez_console
                     Console.Clear();
 
                     // Desenha na tela
-                    Tela.imprimirTabuleiro(partida.tab);
+                    Tela.imprimirTabuleiro(partida.tab, null);
 
                     // Solicita a origem
                     Console.Write("Informe a origem: ");
                     Posicao origem = Tela.lerPosicaoXadrez().toPosicao();
+
+                    bool[,] posicoesPossiveis = partida.tab.peca(origem).movimentosPossiveis();
+
+                    // Limpa a tela
+                    Console.Clear();
+
+                    // Desenha na tela
+                    Tela.imprimirTabuleiro(partida.tab, posicoesPossiveis);
 
                     // Solicita o destino
                     Console.Write("Informe o destino: ");
