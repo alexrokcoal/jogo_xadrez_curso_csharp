@@ -12,6 +12,17 @@ namespace xadrez_console
             Console.WriteLine("\n     Xadrez do Alex!\n");
         }
 
+        public static void imprimirPartida(PartidaXadrez partida)
+        {
+            imprimirTabuleiro(partida.tab, null);
+
+            imprimirPecasCapturadas(partida);
+
+            // Apresenta informações na tela
+            Console.WriteLine("Turno: " + partida.turno);
+            Console.WriteLine("Aguardando jogada: " + partida.jogadorAtual);
+        }
+
         public static void imprimirTabuleiro(Tabuleiro tab, bool[,]? posicoesPossiveis)
         {
             bool darkBackground = false;
@@ -74,6 +85,29 @@ namespace xadrez_console
 
             Console.Write(peca + " ");
             Console.ForegroundColor = aux;
+        }
+
+        public static void imprimirConjunto(HashSet<Peca> conjunto)
+        {
+            foreach (Peca x in conjunto)
+            {
+                Console.Write(x + " ");
+            }
+        }
+
+        public static void imprimirPecasCapturadas(PartidaXadrez partida)
+        {
+            Console.WriteLine("Peças capturadas:");
+
+            Console.Write("Brancas: ");
+            imprimirConjunto(partida.pecasCapturadas(Cor.Branca));
+
+            Console.WriteLine();
+
+            Console.Write("Pretas: ");
+            imprimirConjunto(partida.pecasCapturadas(Cor.Preta));
+
+            Console.WriteLine();
         }
     }
 }

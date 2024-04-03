@@ -23,11 +23,8 @@ namespace xadrez_console
                         // Desenha na tela
                         Console.Clear();
                         Tela.imprimeTitulo();
-                        Tela.imprimirTabuleiro(partida.tab, null);
 
-                        // Apresenta informações na tela
-                        Console.WriteLine("Turno: " + partida.turno);
-                        Console.WriteLine("Aguardando jogada: " + partida.jogadorAtual);
+                        Tela.imprimirPartida(partida);
 
                         // Solicita e valida a origem
                         Console.Write("\nInforme a origem: ");
